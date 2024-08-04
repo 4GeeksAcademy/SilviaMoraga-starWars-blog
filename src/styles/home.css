@@ -1,0 +1,7 @@
+.btn-outline-warning.active {
+    box-shadow: 0 0 20px rgb(247, 240, 148);
+  }
+
+  .btn-outline-primary:hover {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+}

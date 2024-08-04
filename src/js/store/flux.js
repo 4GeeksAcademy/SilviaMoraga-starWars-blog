@@ -12,7 +12,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			characters: [],
+			planets: [],
+			starships: [],
+			favorites: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -37,9 +41,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			getAllCharacters: () => {
+				fetch("https://www.swapi.tech/api/people")
+					.then(response => response.json())
+					.then((data) => {
+						setStore({ characters: data.results })
+					})
+					.catch(() => { });
+			},
+			getAllPlanets: () => {
+				fetch("https://www.swapi.tech/api/planets")
+					.then(response => response.json())
+					.then((data) => {
+						setStore({ planets: data.results })
+					})
+					.catch(() => { });
+			},
+			getAllStarships: () => {
+				fetch("https://www.swapi.tech/api/starships")
+					.then(response => response.json())
+					.then((data) => {
+						setStore({ starships: data.results })
+					})
+					.catch(() => { });
+			},
+			addFavorite: (name) => {
+				const store = getStore();
+				setStore({ favorites: [...store.favorites, name] });
+			},
+			deleteFavorite: (name) => {
+				const store = getStore();
+				setStore({ favorites: store.favorites.filter(favorite => favorite !== name) });
+			},
+			getFavorites: () => {
+				const store = getStore();	
+				return store.favorites;
 			}
 		}
-	};
+	}
 };
 
 export default getState;
