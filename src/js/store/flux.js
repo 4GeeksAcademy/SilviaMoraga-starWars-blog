@@ -16,7 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characters: [],
 			planets: [],
 			starships: [],
-			favorites: []
+			favorites: [],
+			learnMore: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -66,17 +67,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(() => { });
 			},
-			addFavorite: (name) => {
+			addFavorite: (elemento) => {
 				const store = getStore();
-				setStore({ favorites: [...store.favorites, name] });
+				setStore({ favorites: [...store.favorites, elemento] });
 			},
 			deleteFavorite: (name) => {
 				const store = getStore();
-				setStore({ favorites: store.favorites.filter(favorite => favorite !== name) });
+				setStore({ favorites: store.favorites.filter(favorite => favorite[0] !== name) });
 			},
 			getFavorites: () => {
 				const store = getStore();	
 				return store.favorites;
+			},
+			learnMoreCharacters: (uidCharacter) => {
+				fetch("https://www.swapi.tech/api/people/" + uidCharacter)
+					.then(response => response.json())
+					.then((data) => {
+						setStore({learnMore: data.result})
+						console.log(data);
+					})
+					.catch(() => { });
+			},
+			learnMorePlanets: (uidPlanet) => {
+				fetch("https://www.swapi.tech/api/planets/" + uidPlanet)
+					.then(response => response.json())
+					.then((data) => {
+						setStore({learnMore: data.result})
+						console.log(data);
+					})
+					.catch(() => { });
+			},
+			learnMoreStarships: (uidStarship) => {
+				fetch("https://www.swapi.tech/api/starships/" + uidStarship)
+					.then(response => response.json())
+					.then((data) => {
+						setStore({learnMore: data.result})
+						console.log(data);
+					})
+					.catch(() => { });
 			}
 		}
 	}

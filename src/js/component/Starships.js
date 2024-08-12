@@ -9,35 +9,43 @@ const Starships = ({ name, uidStarship }) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
-        setIsFavorite(store.favorites.includes(name));
+        setIsFavorite(store.favorites.some((element) => JSON.stringify(element) == JSON.stringify([name, uidStarship])));
     }, [store.favorites, name]);
+    //explicado en 'Characters'
 
     const handleFavoriteClick = () => {
         if (isFavorite) {
             actions.deleteFavorite(name);
         } else {
-            actions.addFavorite(name);
+            actions.addFavorite([name, uidStarship]);
         }
         setIsFavorite(!isFavorite);
     };
 
 
     return (
-        <div className="card container p-3 text-bg-dark border-warning bg-opacity-50">
-            <h5 className="card-title">{name}</h5>
-            <div className='d-flex'>
-                <button className='btn btn-outline-primary me-auto p-2'
-                    onClick={() => {
-                        navigate("/learn-more/" + uidStarship);
-                    }}>Learn more!</button>
+        <div className="card container p-3 text-bg-dark border-warning bg-opacity-50 d-flex flex-column justify-content-between" style={{ height: "100%" }}>
+            <img src={`https://starwars-visualguide.com/assets/img/starships/${uidStarship[1]}.jpg`}
+                onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = "https://starwars-visualguide.com/assets/img/placeholder.jpg";
+                }} />
+            <div className="d-flex flex-column justify-content-between" >
+                <h5 className="card-title mt-5">{name}</h5>
+                <div className='d-flex mt-auto'>
+                    <button className='btn btn-outline-primary me-auto p-2'
+                        onClick={() => {
+                            navigate("/learn-more/" + uidStarship[1], {state: {"elemento": uidStarship}});
+                        }}>Learn more!</button>
 
-                <div className={`btn btn-outline-warning p-2 ${isFavorite ? 'active' : ''}`}
-                    onClick={handleFavoriteClick}>
-                    {isFavorite ? (
-                        <i className="fa-solid fa-heart active" style={{ color: "#FFD43B" }} />
-                    ) : (
-                        <i className="fa-regular fa-heart" style={{ color: "#FFD43B" }} />
-                    )}
+                    <div className={`btn btn-outline-warning p-2 ${isFavorite ? 'active' : ''}`}
+                        onClick={handleFavoriteClick}>
+                        {isFavorite ? (
+                            <i className="fa-solid fa-heart active" style={{ color: "#FFD43B" }} />
+                        ) : (
+                            <i className="fa-regular fa-heart" style={{ color: "#FFD43B" }} />
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

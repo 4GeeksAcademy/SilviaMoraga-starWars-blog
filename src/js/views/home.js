@@ -9,18 +9,22 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="p-3 mb-2" style={{
-			backgroundImage: 'url(https://lumiere-a.akamaihd.net/v1/images/star-wars-backgrounds-25_bc15ec98.jpeg?download=true)', height: "100vh", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'
+		<div className="p-3" style={{
+			backgroundImage: 'url(https://lumiere-a.akamaihd.net/v1/images/star-wars-backgrounds-25_bc15ec98.jpeg?download=true)', height: "100%", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'
 		}}>
+
 			<div className="container">
-				<div className="row flex-nowrap overflow-auto" style={{marginTop: "40px"}}>
+				<div>
+					<h2 className="form-label text-warning" style={{ marginTop: '40px', textShadow: "0 0 20px rgb(247, 240, 148)" }}>Characters</h2>
+				</div>
+				<div className="row flex-nowrap overflow-auto" style={{ marginTop: "15px" }}>
 					{
 						store.characters.map((character, index, value) => {
 							return (
 								<div className="col-3">
 									<Characters key={index}
 										name={character.name}
-										uidCharacter={character.uid}
+										uidCharacter={["character",character.uid]}
 									/>
 								</div>
 							)
@@ -29,14 +33,17 @@ export const Home = () => {
 				</div>
 			</div>
 			<div className="container">
-				<div className="row flex-nowrap overflow-auto" style={{marginTop: "80px"}}>
+				<div>
+					<h2 className="form-label text-warning" style={{ marginTop: '80px', textShadow: "0 0 20px rgb(247, 240, 148)" }}>Planets</h2>
+				</div>
+				<div className="row flex-nowrap overflow-auto" style={{ marginTop: "15px" }}>
 					{
 						store.planets.map((planet, index, value) => {
 							return (
 								<div className="col-3">
 									<Planets key={index}
 										name={planet.name}
-										uidPlanet={planet.uid}
+										uidPlanet={["planet",planet.uid]}
 									/>
 								</div>
 							)
@@ -45,14 +52,17 @@ export const Home = () => {
 				</div>
 			</div>
 			<div className="container">
-				<div className="row flex-nowrap overflow-auto" style={{marginTop: "80px"}}>
+				<div>
+					<h2 className="form-label text-warning" style={{ marginTop: '80px', textShadow: "0 0 20px rgb(247, 240, 148)" }}>Starships</h2>
+				</div>
+				<div className="row flex-nowrap overflow-auto" style={{ marginTop: "15px" }}>
 					{
 						store.starships.map((starship, index, value) => {
 							return (
 								<div className="col-3">
 									<Starships key={index}
 										name={starship.name}
-										uidStarship={starship.uid}
+										uidStarship={["starship",starship.uid]}
 									/>
 								</div>
 							)
